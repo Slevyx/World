@@ -11,17 +11,20 @@
 <body>
 	<p>Logged user: ${username}</p>
 	<p><a href="/World/pages/City.jsp">City Search</a>
-	<a href="/World/pages/Countries.jsp">Countries Search</a></p>
-	<div class="continent-list">
-		<p>Continent List:</p>
-		<a href="/World/Continent?continentName=Europe">Europe</a> <a
-			href="/World/Continent?continentName=Asia">Asia</a> <a
-			href="/World/Continent?continentName=Africa">Africa</a> <a
-			href="/World/Continent?continentName=North America">North America</a>
-		<a href="/World/Continent?continentName=South America">South
-			America</a> <a href="/World/Continent?continentName=Oceania">Oceania</a>
-		<a href="/World/Continent?continentName=Antarctica">Antarctica</a>
-	</div>
+	<a href="/World/pages/Countries.jsp">Countries Search</a>
+	<a href="/World/pages/Continents.jsp">Continents Search</a></p>
+	<c:if test="${!isCountriesList && !isCitiesList}">
+		<div class="continent-list">
+			<p>Continent List:</p>
+			<a href="/World/Continent?continentName=Europe">Europe</a> <a
+				href="/World/Continent?continentName=Asia">Asia</a> <a
+				href="/World/Continent?continentName=Africa">Africa</a> <a
+				href="/World/Continent?continentName=North America">North America</a>
+			<a href="/World/Continent?continentName=South America">South
+				America</a> <a href="/World/Continent?continentName=Oceania">Oceania</a>
+			<a href="/World/Continent?continentName=Antarctica">Antarctica</a>
+		</div>
+	</c:if>
 	<c:if test="${isCountriesList && not empty error || isCitiesList && not empty error}">
 		<p>${error}</p>
 	</c:if>

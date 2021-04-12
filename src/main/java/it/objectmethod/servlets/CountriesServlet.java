@@ -34,9 +34,6 @@ public class CountriesServlet extends HttpServlet {
 		if(countryList.isEmpty()) {
 			request.setAttribute("error", "Nothing was found.");
 		}
-		request.setAttribute("isContinentList", false);
-		request.setAttribute("isCountriesList", false);
-		request.setAttribute("isCitiesList", true);
 		request.setAttribute("countryList", countryList);
 		request.getRequestDispatcher("pages/Countries.jsp").forward(request, response);
 	}

@@ -32,7 +32,6 @@ public class CitiesServlet extends HttpServlet {
 		if(citiesList.isEmpty()) {
 			request.setAttribute("error", "Nothing was found.");
 		}
-		request.setAttribute("isContinentList", false);
 		request.setAttribute("isCountriesList", false);
 		request.setAttribute("isCitiesList", true);
 		request.setAttribute("citiesList", citiesList);

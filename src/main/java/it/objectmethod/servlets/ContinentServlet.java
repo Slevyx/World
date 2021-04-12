@@ -31,7 +31,6 @@ public class ContinentServlet extends HttpServlet {
 		if(countryList.isEmpty()) {
 			request.setAttribute("error", "Nothing was found.");
 		}
-		request.setAttribute("isContinentList", false);
 		request.setAttribute("isCountriesList", true);
 		request.setAttribute("isCitiesList", false);
 		request.setAttribute("countryList", countryList);
