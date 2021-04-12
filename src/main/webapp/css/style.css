@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+body {
+	font-family: fantasy;
+	font-size: 16px;
+}
+
+.continent-list {
+	display: flex;
+	flex-direction: column;
+	font-family: fantasy;
+	font-size: 24px;
+}
+
+a { 
+	text-decoration: none;
+	margin: 10px; 
+	color: #439981; 
+}
+
+p { color: #192736; }
