@@ -23,13 +23,19 @@ public class ContinentServlet extends HttpServlet {
 		String continentName = request.getParameter("continentName");
 		List<Country> countryList = new ArrayList<>();
 		IWorldDao worldDao = new WorldDaoImpl();
-		try {
-			countryList = worldDao.getCountriesByContinent(continentName);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(continentName == null) {
+			request.setAttribute("error", "Continent Name is Null.");
 		}
-		if(countryList.isEmpty()) {
-			request.setAttribute("error", "Nothing was found.");
+		else {
+			try {
+				continentName = continentName.toUpperCase();
+				countryList = worldDao.getCountriesByContinent(continentName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			if(countryList.isEmpty()) {
+				request.setAttribute("error", "Nothing was found.");
+			}
 		}
 		request.setAttribute("isCountriesList", true);
 		request.setAttribute("isCitiesList", false);

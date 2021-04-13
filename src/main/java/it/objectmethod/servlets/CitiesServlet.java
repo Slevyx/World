@@ -23,14 +23,19 @@ public class CitiesServlet extends HttpServlet {
 		String countryCode = request.getParameter("countryCode");
 		List<City> citiesList = new ArrayList<>();
 		IWorldDao worldDao = new WorldDaoImpl();
-		
-		try {
-			citiesList = worldDao.getCitiesByCountryCode(countryCode);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(countryCode == null) {
+			request.setAttribute("error", "Country Code is Null.");
 		}
-		if(citiesList.isEmpty()) {
-			request.setAttribute("error", "Nothing was found.");
+		else {
+			try {
+				countryCode = countryCode.toUpperCase();
+				citiesList = worldDao.getCitiesByCountryCode(countryCode);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			if(citiesList.isEmpty()) {
+				request.setAttribute("error", "Nothing was found.");
+			}
 		}
 		request.setAttribute("isCountriesList", false);
 		request.setAttribute("isCitiesList", true);

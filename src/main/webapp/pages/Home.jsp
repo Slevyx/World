@@ -10,7 +10,7 @@
 </head>
 <body>
 	<p>Welcome, please enter your name.</p>
-	<form action="/World/Home" method="POST">
+	<form autocomplete="off" action="/World/Home" method="POST">
 	<input type="text" name="login" /> <input type="submit" value="Login" />
 	</form>
 	<c:if test="${not empty error}">

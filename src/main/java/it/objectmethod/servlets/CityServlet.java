@@ -19,7 +19,7 @@ public class CityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String inputCity = request.getParameter("city").toUpperCase();
+		String inputCity = request.getParameter("city");
 		City city = null;
 		IWorldDao worldDao = new WorldDaoImpl();
 		if(inputCity == null || inputCity.isBlank()) {
@@ -27,17 +27,16 @@ public class CityServlet extends HttpServlet {
 		}
 		else {
 			try {
+				inputCity = inputCity.toUpperCase();
 				city = worldDao.getCity(inputCity);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			if(city != null) {
-				request.setAttribute("city", city);
-			}
-			else {
+			if(city == null) {
 				request.setAttribute("error", "Nothing was found.");
 			}
 		}
+		request.setAttribute("city", city);
 		request.getRequestDispatcher("pages/City.jsp").forward(request, response);
 	}
 }

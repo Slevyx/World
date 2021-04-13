@@ -68,7 +68,7 @@ public class WorldDaoImpl implements IWorldDao{
 		Connection connection = ConnectionFactory.getConnection();
 		List<Country> countryList = new ArrayList<>();
 		Country country = null;
-		String sqlQuery = "SELECT Name, Population, Code FROM country WHERE Continent = ?";
+		String sqlQuery = "SELECT Name, Population, Code FROM country WHERE UPPER(Continent) = ?";
 		PreparedStatement statement = connection.prepareStatement(sqlQuery);
 		statement.setString(1, continentName);
 		ResultSet result = statement.executeQuery();
@@ -90,7 +90,7 @@ public class WorldDaoImpl implements IWorldDao{
 		Connection connection = ConnectionFactory.getConnection();
 		List<City> citiesList = new ArrayList<>();
 		City city = null;
-		String sqlQuery = "SELECT Name, Population FROM city WHERE CountryCode = ?";
+		String sqlQuery = "SELECT Name, Population FROM city WHERE UPPER(CountryCode) = ?";
 		PreparedStatement statement = connection.prepareStatement(sqlQuery);
 		statement.setString(1, countryCode);
 		ResultSet result = statement.executeQuery();
