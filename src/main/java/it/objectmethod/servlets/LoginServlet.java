@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/Home")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("login");
+		String username = request.getParameter("username");
 		String redirect = null;
 		if(username == null || username.isBlank()) {
 			request.setAttribute("error", "Username cannot be empty.");
-			redirect = "pages/Home.jsp";
+			redirect = "pages/Login.jsp";
 		}
 		else {
 			HttpSession session = request.getSession();
-			session.setAttribute("username", username);
+			session.setAttribute("loggedUser", username);
 			redirect = "pages/City.jsp";
 		}
 		request.getRequestDispatcher(redirect).forward(request, response);

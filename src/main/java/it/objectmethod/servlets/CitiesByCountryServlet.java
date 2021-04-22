@@ -11,35 +11,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.objectmethod.dao.IWorldDao;
-import it.objectmethod.dao.impl.WorldDaoImpl;
+import it.objectmethod.dao.ICityDao;
+import it.objectmethod.dao.impl.CityDaoImpl;
 import it.objectmethod.models.City;
 
-@WebServlet("/Cities")
-public class CitiesServlet extends HttpServlet {
+@WebServlet("/cities")
+public class CitiesByCountryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String countryCode = request.getParameter("countryCode");
-		List<City> citiesList = new ArrayList<>();
-		IWorldDao worldDao = new WorldDaoImpl();
+		List<City> cities = new ArrayList<>();
+		ICityDao cityDao = new CityDaoImpl();
 		if(countryCode == null) {
-			request.setAttribute("error", "Country Code is Null.");
+			request.setAttribute("error", "Country not found.");
 		}
 		else {
 			try {
-				countryCode = countryCode.toUpperCase();
-				citiesList = worldDao.getCitiesByCountryCode(countryCode);
+				cities = cityDao.getCitiesByCountry(countryCode);
+				if(cities.isEmpty()) {
+					request.setAttribute("error", "Nothing was found.");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			if(citiesList.isEmpty()) {
-				request.setAttribute("error", "Nothing was found.");
-			}
 		}
-		request.setAttribute("isCountriesList", false);
-		request.setAttribute("isCitiesList", true);
-		request.setAttribute("citiesList", citiesList);
-		request.getRequestDispatcher("pages/Continents.jsp").forward(request, response);
+		request.setAttribute("cities", cities);
+		request.getRequestDispatcher("pages/Cities.jsp").forward(request, response);
 	}
 }

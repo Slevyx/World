@@ -5,22 +5,24 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>City</title>
+<title>Countries</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-	<h1>CITY PAGE</h1>
+	<h1>COUNTRIES PAGE</h1>
 	<h2>Welcome, ${loggedUser}!</h2>
-	<a href="/World/pages/CountriesList.jsp"><button type="button" class="btn btn-warning">Countries</button></a>
+	<a href="/World/pages/City.jsp"><button type="button" class="btn btn-danger">City</button></a>
 	<a href="/World/continent"><button type="button" class="btn btn-dark">Continents</button></a>
-	<h3>Find any information about your preferred city.</h3>
-	<form autocomplete="off" action="/World/city" method="POST">
-		<label for="cityName">City Name:</label>
-		<input type="text" name="cityName" />
+	<h3>Find information about countries by country name, continent name or both.</h3>
+	<form autocomplete="off" action="/World/countries" method="POST">
+		<label for="countryName">Country Name:</label>
+		<input type="text" name="countryName" />
+		<label for="continentName">Continent Name:</label>
+		<input type="text" name="continentName" /> 
 		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
 	<c:choose>
-	<c:when test="${empty city && empty error}">
+	<c:when test="${empty countriesList && empty error}">
 		 <h4>Search for cities Data.</h4>
 		</c:when>
 		<c:when test="${not empty error}">
@@ -31,15 +33,19 @@
 				<tr>
 					<th scope="col">Name:</th>
 					<th scope="col">Country Code:</th>
-					<th scope="col">District:</th>
+					<th scope="col">Continent:</th>
 					<th scope="col">Population:</th>
+					<th scope="col">Surface Area:</th>
 				</tr>
+				<c:forEach items="${countriesList}" var="country">
 				<tr>
-					<td>${city.name}</td>
-					<td>${city.countryCode}</td>
-					<td>${city.district}</td>
-					<td>${city.population}</td>
+					<td>${country.name}</td>
+					<td>${country.code}</td>
+					<td>${country.continent}</td>
+					<td>${country.population}</td>
+					<td>${country.surfaceArea}</td>
 				</tr>
+				</c:forEach>
 			</table>
 		</c:otherwise>
 	</c:choose>

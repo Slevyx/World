@@ -13,23 +13,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import it.objectmethod.dao.ICountryDao;
 import it.objectmethod.dao.impl.CountryDaoImpl;
+import it.objectmethod.models.Country;
 
-@WebServlet("/continent")
-public class ContinentServlet extends HttpServlet {
+@WebServlet("/countriesByContinent")
+public class CountriesByContinentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+      
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<String> continentsList = new ArrayList<>();
+		String continentName = request.getParameter("continentName");
+		List<Country> countries = new ArrayList<>();
 		ICountryDao countryDao = new CountryDaoImpl();
-		try {
-			continentsList = countryDao.getContinents();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(continentName == null) {
+			request.setAttribute("error", "Continent not found.");
 		}
-		if(continentsList.isEmpty()) {
-			request.setAttribute("error", "Nothing was found.");
+		else {
+			try {
+				countries = countryDao.getCountriesbyContinentName(continentName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		request.setAttribute("continentsList", continentsList);
-		request.getRequestDispatcher("pages/Continents.jsp").forward(request, response);
+		request.setAttribute("countries", countries);
+		request.getRequestDispatcher("pages/Countries.jsp").forward(request, response);
 	}
 }

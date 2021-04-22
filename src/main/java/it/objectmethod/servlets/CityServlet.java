@@ -9,26 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.objectmethod.dao.IWorldDao;
-import it.objectmethod.dao.impl.WorldDaoImpl;
+import it.objectmethod.dao.ICityDao;
+import it.objectmethod.dao.impl.CityDaoImpl;
 import it.objectmethod.models.City;
 
-@WebServlet("/City")
+@WebServlet("/city")
 public class CityServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String inputCity = request.getParameter("city");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String cityName = request.getParameter("cityName");
 		City city = null;
-		IWorldDao worldDao = new WorldDaoImpl();
-		if(inputCity == null || inputCity.isBlank()) {
+		ICityDao cityDao = new CityDaoImpl();
+		if(cityName == null || cityName.isBlank()) {
 			request.setAttribute("error", "City field cannot be empty.");
 		}
 		else {
 			try {
-				inputCity = inputCity.toUpperCase();
-				city = worldDao.getCity(inputCity);
+				cityName = cityName.toUpperCase();
+				city = cityDao.getCityByName(cityName);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

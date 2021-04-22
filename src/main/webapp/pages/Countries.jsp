@@ -1,47 +1,31 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Countries</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-	<p>Logged user: ${username}</p>
-	<p><a href="/World/pages/City.jsp">City Search</a>
-	<a href="/World/pages/Continents.jsp">Continents Search</a></p>
-	<form action="/World/Countries">
-		<label for="country">Country:</label>
-		<input type="text" name="country" />
-		<label for="continent">Continent:</label>
-		<input type="text" name="continent" /> 
-		<input type="submit" value="Search" />
-	</form>
+	<h2>Welcome, ${loggedUser}!</h2>
+	<a href="/World/pages/City.jsp"><button type="button" class="btn btn-danger">City</button></a>
+	<a href="/World/pages/CountriesList.jsp"><button type="button" class="btn btn-warning">Countries</button></a>
+	<a href="/World/continent"><button type="button" class="btn btn-dark">Continents</button></a>
+	<h3>Countries information.</h3>
 	<c:choose>
-		<c:when test="${empty countryList && empty error}">
-		 <p>Search for countries Data.</p>
-		</c:when>
-		<c:when test="${error != null}">
-		 <p>${error}</p>
+	<c:when test="${empty countries}">
+		 <h4>Nothing was found.</h4>
 		</c:when>
 		<c:otherwise>
-			<table cellspacing="20px">
+			<table class="table">
 				<tr>
-					<td>Name:</td>
-					<td>Country Code:</td>
-					<td>Continent:</td>
-					<td>Population:</td>
-					<td>Surface Area:</td>
+					<th scope="col">Country Name:</th>
 				</tr>
-				<c:forEach items="${countryList}" var="country">
+				<c:forEach items="${countries}" var="country">
 				<tr>
-					<td>${country.name}</td>
-					<td>${country.code}</td>
-					<td>${country.continent}</td>
-					<td>${country.population}</td>
-					<td>${country.surfaceArea}</td>
+					<td><a class="text-primary text-decoration-none" href="/World/cities?countryCode=${country.code}">${country.name}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

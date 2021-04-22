@@ -11,37 +11,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.objectmethod.dao.IWorldDao;
-import it.objectmethod.dao.impl.WorldDaoImpl;
+import it.objectmethod.dao.ICountryDao;
+import it.objectmethod.dao.impl.CountryDaoImpl;
 import it.objectmethod.models.Country;
 
 
-@WebServlet("/Countries")
+@WebServlet("/countries")
 public class CountriesServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String countryName = request.getParameter("country");
-		String countryContinent = request.getParameter("continent");
-		List<Country> countryList = new ArrayList<>();
-		IWorldDao worldDao = new WorldDaoImpl();
-		if(countryName == null || countryContinent == null) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String countryName = request.getParameter("countryName");
+		String continentName = request.getParameter("continentName");
+		List<Country> countriesList = new ArrayList<>();
+		ICountryDao countryDao = new CountryDaoImpl();
+		if(countryName == null || continentName == null) {
 			request.setAttribute("error", "Null fields.");
 		}
 		else {
 			try {
 				countryName = countryName.toUpperCase();
-				countryContinent = countryContinent.toUpperCase();
-				countryList = worldDao.getCountries(countryName, countryContinent);
+				continentName = continentName.toUpperCase();
+				countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			if(countryList.isEmpty()) {
+			if(countriesList.isEmpty()) {
 				request.setAttribute("error", "Nothing was found.");
 			}
 		}
-		request.setAttribute("countryList", countryList);
-		request.getRequestDispatcher("pages/Countries.jsp").forward(request, response);
+		request.setAttribute("countriesList", countriesList);
+		request.getRequestDispatcher("pages/CountriesList.jsp").forward(request, response);
 	}
 }
