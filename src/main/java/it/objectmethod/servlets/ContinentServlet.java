@@ -1,7 +1,6 @@
 package it.objectmethod.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +20,7 @@ public class ContinentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<String> continentsList = new ArrayList<>();
 		ICountryDao countryDao = new CountryDaoImpl();
-		try {
-			continentsList = countryDao.getContinents();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		continentsList = countryDao.getContinents();
 		if(continentsList.isEmpty()) {
 			request.setAttribute("error", "Nothing was found.");
 		}

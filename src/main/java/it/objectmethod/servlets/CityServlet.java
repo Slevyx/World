@@ -1,7 +1,6 @@
 package it.objectmethod.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,12 +25,8 @@ public class CityServlet extends HttpServlet {
 			request.setAttribute("error", "City field cannot be empty.");
 		}
 		else {
-			try {
-				cityName = cityName.toUpperCase();
-				city = cityDao.getCityByName(cityName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			cityName = cityName.toUpperCase();
+			city = cityDao.getCityByName(cityName);
 			if(city == null) {
 				request.setAttribute("error", "Nothing was found.");
 			}

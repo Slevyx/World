@@ -1,7 +1,6 @@
 package it.objectmethod.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +26,7 @@ public class CountriesByContinentServlet extends HttpServlet {
 			request.setAttribute("error", "Continent not found.");
 		}
 		else {
-			try {
-				countries = countryDao.getCountriesbyContinentName(continentName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			countries = countryDao.getCountriesbyContinentName(continentName);
 		}
 		request.setAttribute("countries", countries);
 		request.getRequestDispatcher("pages/Countries.jsp").forward(request, response);

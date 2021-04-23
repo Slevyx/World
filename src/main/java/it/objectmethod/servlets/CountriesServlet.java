@@ -1,7 +1,6 @@
 package it.objectmethod.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +29,9 @@ public class CountriesServlet extends HttpServlet {
 			request.setAttribute("error", "Null fields.");
 		}
 		else {
-			try {
-				countryName = countryName.toUpperCase();
-				continentName = continentName.toUpperCase();
-				countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			countryName = countryName.toUpperCase();
+			continentName = continentName.toUpperCase();
+			countriesList = countryDao.getCountriesByCountryNameContinentName(countryName, continentName);
 			if(countriesList.isEmpty()) {
 				request.setAttribute("error", "Nothing was found.");
 			}

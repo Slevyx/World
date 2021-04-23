@@ -14,48 +14,56 @@ import it.objectmethod.utils.ConnectionFactory;
 public class CityDaoImpl implements ICityDao{
 
 	@Override
-	public City getCityByName(String cityName) throws SQLException {
-		Connection connection = ConnectionFactory.getConnection();
+	public City getCityByName(String cityName) {
 		City city = null;
 		String sqlQuery = "SELECT * FROM city WHERE UPPER(Name) = ?";
-		PreparedStatement statement = connection.prepareStatement(sqlQuery);
-		statement.setString(1, cityName);
-		ResultSet result = statement.executeQuery();
-		while(result.next()) {
-			city = new City();
-			city.setId(result.getInt("ID"));
-			city.setName(result.getString("Name"));
-			city.setCountryCode(result.getString("CountryCode"));
-			city.setDistrict(result.getString("District"));
-			city.setPopulation(result.getInt("Population"));
+		try {
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			statement.setString(1, cityName);
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+				city = new City();
+				city.setId(result.getInt("ID"));
+				city.setName(result.getString("Name"));
+				city.setCountryCode(result.getString("CountryCode"));
+				city.setDistrict(result.getString("District"));
+				city.setPopulation(result.getInt("Population"));
+			}
+			result.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		result.close();
-		statement.close();
-		connection.close();
 		return city;
 	}
 
 	@Override
-	public List<City> getCitiesByCountry(String countryCode) throws SQLException {
-		Connection connection = ConnectionFactory.getConnection();
+	public List<City> getCitiesByCountry(String countryCode) {
 		List<City> cities = new ArrayList<>();
 		City city = null;
 		String sqlQuery = "SELECT * FROM city WHERE CountryCode = ?";
-		PreparedStatement statement = connection.prepareStatement(sqlQuery);
-		statement.setString(1, countryCode);
-		ResultSet result = statement.executeQuery();
-		while (result.next()) {
-			city = new City();
-			city.setId(result.getInt("ID"));
-			city.setName(result.getString("Name"));
-			city.setCountryCode(result.getString("CountryCode"));
-			city.setDistrict(result.getString("District"));
-			city.setPopulation(result.getInt("Population"));
-			cities.add(city);
+		try {
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			statement.setString(1, countryCode);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				city = new City();
+				city.setId(result.getInt("ID"));
+				city.setName(result.getString("Name"));
+				city.setCountryCode(result.getString("CountryCode"));
+				city.setDistrict(result.getString("District"));
+				city.setPopulation(result.getInt("Population"));
+				cities.add(city);
+			}
+			result.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		result.close();
-		statement.close();
-		connection.close();
 		return cities;
 	}
 }

@@ -1,7 +1,6 @@
 package it.objectmethod.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +26,9 @@ public class CitiesByCountryServlet extends HttpServlet {
 			request.setAttribute("error", "Country not found.");
 		}
 		else {
-			try {
-				cities = cityDao.getCitiesByCountry(countryCode);
-				if(cities.isEmpty()) {
-					request.setAttribute("error", "Nothing was found.");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			cities = cityDao.getCitiesByCountry(countryCode);
+			if(cities.isEmpty()) {
+				request.setAttribute("error", "Nothing was found.");
 			}
 		}
 		request.setAttribute("cities", cities);
